@@ -13,7 +13,6 @@ public class Agent : MonoBehaviour {
     // <Serialized> fields: will be populated by the inspector
     public Transform Eyes;
     public AgentStats Stats;
-    public GameObject BulletPrefab;
     public State InitialState;
 
     public Transform Target { get; set; }
@@ -40,13 +39,7 @@ public class Agent : MonoBehaviour {
 
         return Stats;
     }
-
-    public void DefaultAttack()
-    {
-        var spawnPosition = new Vector3(transform.position.x, 0.5f, transform.position.z) + transform.forward;
-        Instantiate(BulletPrefab, spawnPosition, transform.rotation);
-    }
-
+   
     public void RotateTowardsTarget()
     {
         var destination = _navMeshAgent.destination;

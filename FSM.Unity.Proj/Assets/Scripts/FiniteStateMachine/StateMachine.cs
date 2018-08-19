@@ -9,7 +9,6 @@ using UnityEngine.AI;
 public class StateMachine: IStateMachine
 {
     public IState CurrentState;
-    public IState RemainingState;
 
     private float _timeElapsedInState;
     private bool _isActive;
@@ -52,9 +51,9 @@ public class StateMachine: IStateMachine
         return CurrentState;
     }
 
-    public void TransitionState(State nextState)
+    public void TransitionState(IState nextState)
     {
-        if (nextState != RemainingState)
+        if (nextState != CurrentState)
         {
             CurrentState = nextState;
             ExitState();

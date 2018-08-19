@@ -13,7 +13,7 @@ namespace Assets.Scripts.FiniteStateMachine
         void Start();
         void Update();
         void Stop();
-        void TransitionState(State nextState);
+        void TransitionState(IState nextState);
 
         bool CheckTimeInState(float duration);
 
