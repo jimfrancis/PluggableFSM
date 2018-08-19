@@ -18,7 +18,7 @@ Simply clone this repo or pull down the files to add them into your Unity projec
 
 ## Getting Started
 
-The project offers a straight-forward approach to begin adding AI to your scene. The FSM operates by 
+The project offers a straight-forward approach to begin adding AI to your scene. For an in-depth description of how a FSM operates have a read of [this article](https://gamedevelopment.tutsplus.com/tutorials/finite-state-machines-theory-and-implementation--gamedev-11867).
 
 Simply follow the steps below to begin adding agency to a gameobject. The functionality in this project leverages Unity's `Scriptable Object` class, which allows us to create assests of our scripts and pass them as static files to your agent.
 
