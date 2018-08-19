@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1197eb0d62c97248999a344ec4987e9, type: 3}
-  m_Name: Patrol_Cube
+  m_Name: Pursue_Cube
   m_EditorClassIdentifier: 
   Actions:
-  - {fileID: 11400000, guid: be0e6c2a20e0b3341acc564a04cad1df, type: 2}
+  - {fileID: 11400000, guid: 6b4e62151a11703408505a8e0fe67daa, type: 2}
   Transitions:
   - Decision: {fileID: 11400000, guid: 3cf0770d37cb22c438a21477461f1a46, type: 2}
-    TrueState: {fileID: 11400000, guid: 047ec43c82f980d49bf003608f1a0786, type: 2}
-    FalseState: {fileID: 11400000}
-  StateGizmoColour: {r: 0, g: 0.5386144, b: 0.6132076, a: 1}
+    TrueState: {fileID: 11400000}
+    FalseState: {fileID: 11400000, guid: 4ca6067269d7f0f419e94498a048a4e0, type: 2}
+  StateGizmoColour: {r: 1, g: 0, b: 0, a: 1}

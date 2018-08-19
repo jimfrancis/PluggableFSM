@@ -11,15 +11,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ae8944bbfcd3f44a943b6871987eef8, type: 3}
   m_Name: Cube
   m_EditorClassIdentifier: 
-  MovementSpeed: 20
-  RotationSpeed: 50
-  ViewDistance: 40
+  MovementSpeed: 10
+  RotationSpeed: 100
+  ViewDistance: 15
   ViewRadius: 1
   AttackRange: 40
   AttackSpeed: 1
   AttackDamage: 50
-  VisionDropDuration: 2
+  VisionDropDuration: 3
   SearchDuration: 4
   SearchingTurnSpeed: 120
-  PursueStoppingDistance: 5
+  PursueStoppingDistance: 3
   PatrolStoppingDistance: 0

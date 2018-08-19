@@ -12,8 +12,9 @@ public class PursueAction : Action {
         var agentStats = agent.GetStats();
         var navMeshAgent = agent.GetNavMeshAgent();
 
-        navMeshAgent.stoppingDistance = agentStats.AttackRange;
+        navMeshAgent.stoppingDistance = agentStats.PursueStoppingDistance;
         navMeshAgent.destination = agent.Target.position;
         navMeshAgent.isStopped = false;
+        agent.RotateTowardsTarget();
 	}
 }

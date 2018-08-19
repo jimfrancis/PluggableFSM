@@ -9,5 +9,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab0b708d46b19a94ab44880031722035, type: 3}
-  m_Name: LineOfSight
+  m_Name: Range_LineOfSight
   m_EditorClassIdentifier: 

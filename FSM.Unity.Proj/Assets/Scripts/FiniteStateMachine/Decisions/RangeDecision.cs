@@ -9,8 +9,9 @@ using Debug = UnityEngine.Debug;
 public class RangeDecision : Decision
 {
 	[HideInInspector] public Stopwatch StopWatch;
+    private bool _hasVisionOfTarget = false;
 
-	public void OnEnable()
+    void OnEnable()
 	{
 		StopWatch = new Stopwatch();
 	}
@@ -22,13 +23,35 @@ public class RangeDecision : Decision
 
 	private bool CheckLineOfSight(IStateMachine stateMachine)
 	{
-		return FireRaycasts(stateMachine);
-	}
+		_hasVisionOfTarget = FireRaycasts(stateMachine);
+
+        if (_hasVisionOfTarget)
+        {
+            if (!StopWatch.IsRunning) {
+                StopWatch.Start();
+            }
+
+            var expired = StopWatch.Elapsed.Seconds >= stateMachine.GetAgent().GetStats().VisionDropDuration;
+
+            if (expired)
+            {
+                StopWatch.Reset();
+                _hasVisionOfTarget = FireRaycasts(stateMachine);
+                return _hasVisionOfTarget;
+            }
+
+            return true;
+        }
+
+        if (StopWatch.IsRunning) {
+            StopWatch.Reset();
+        }
+
+        return false;
+    }
 
 	private bool FireRaycasts(IStateMachine stateMachine)
 	{
-        bool hasVisionOfPlayer = false;
-
         var agentEyes = stateMachine.GetAgent().GetEyes();
         var agentStats = stateMachine.GetAgent().GetStats();
 
@@ -61,28 +84,18 @@ public class RangeDecision : Decision
 			
 			Debug.DrawRay(agentEyes.transform.position, rayDirection * agentStats.ViewDistance, stateMachine.GetCurrentState().GetCurrentStateColor());
 			var layerMask = 1 << 10;
+
+            // invert bitmask to collide with all layers except 10
+            layerMask = ~layerMask;
 			
 			if (Physics.Raycast(agentEyes.transform.position, rayDirection, out hit, agentStats.ViewDistance, layerMask) 
-			    && hit.collider.CompareTag("player"))
+			    && hit.collider.CompareTag("agent"))
 			{
                 stateMachine.GetAgent().Target = hit.transform;
-				StopWatch.Start();
+                return true;
 			}
 		}
 
-		if (hasVisionOfPlayer)
-		{
-			var expired = StopWatch.Elapsed.Seconds >= stateMachine.GetAgent().GetStats().VisionDropDuration;
-			
-			if (expired)
-			{
-				StopWatch.Reset();
-				return false;
-			}
-
-			return true;
-		}
-
-		return false;
+        return false;
 	}
 }
