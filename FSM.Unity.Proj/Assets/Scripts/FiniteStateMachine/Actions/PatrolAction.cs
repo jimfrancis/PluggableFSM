@@ -8,7 +8,6 @@ using UnityEngine;
 public class PatrolAction : Action
 {
     public List<Transform> WayPointList;
-    private int _nextWaypoint = 0;
 
     public override void Execute(IStateMachine stateMachine)
 	{
@@ -21,17 +20,18 @@ public class PatrolAction : Action
 
 	private void Patrol(IStateMachine stateMachine)
 	{
-        var navMeshAgent = stateMachine.GetAgent().GetNavMeshAgent();
-        var agentStats = stateMachine.GetAgent().GetStats();
-        var wayPoints = WayPointList;
+        var agent = stateMachine.GetAgent();
+        var navMeshAgent = agent.GetNavMeshAgent();
+        var agentStats = agent.GetStats();
 
         navMeshAgent.stoppingDistance = agentStats.PatrolStoppingDistance;
-        navMeshAgent.destination = wayPoints[_nextWaypoint].position;
+        navMeshAgent.destination = WayPointList[agent.NextWaypoint].position;
         navMeshAgent.isStopped = false;
+        agent.RotateTowardsTarget();
 
 		if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance && !navMeshAgent.pathPending) 
 		{
-            _nextWaypoint = (_nextWaypoint + 1) % WayPointList.Count;
+            agent.NextWaypoint = (agent.NextWaypoint + 1) % WayPointList.Count;
 		}
 	}
 }

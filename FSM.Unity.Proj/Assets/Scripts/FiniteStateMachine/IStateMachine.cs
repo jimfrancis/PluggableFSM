@@ -9,7 +9,7 @@ namespace Assets.Scripts.FiniteStateMachine
 {
     public interface IStateMachine
     {
-        void Init(Agent self);
+        void Init(Agent self, IState initialState = null);
         void Start();
         void Update();
         void Stop();

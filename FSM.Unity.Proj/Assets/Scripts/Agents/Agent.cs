@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.FiniteStateMachine;
+using Assets.Scripts.FiniteStateMachine.States;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,13 +14,15 @@ public class Agent : MonoBehaviour {
     public Transform Eyes;
     public AgentStats Stats;
     public GameObject BulletPrefab;
+    public State InitialState;
 
     public Transform Target { get; set; }
+    public int NextWaypoint { get; set; }
 
     public Transform GetTransform() {
         return GetComponent<Transform>();
     }
-
+    
     public Transform GetEyes() {
         ValidateComponent(Eyes, "Eyes Transform");
 
@@ -47,6 +50,7 @@ public class Agent : MonoBehaviour {
     public void RotateTowardsTarget()
     {
         var destination = _navMeshAgent.destination;
+        destination.y = transform.position.y;
 
         if ((destination - transform.position).magnitude < 0.1f) return;
 
@@ -57,9 +61,10 @@ public class Agent : MonoBehaviour {
 
     void Start()
     {
+        NextWaypoint = 0;
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _stateMachine = new StateMachine();
-        _stateMachine.Init(this);
+        _stateMachine.Init(this, InitialState);
         _stateMachine.Start();
     }
 

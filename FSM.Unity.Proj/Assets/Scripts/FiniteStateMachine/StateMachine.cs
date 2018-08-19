@@ -15,8 +15,9 @@ public class StateMachine: IStateMachine
     private bool _isActive;
     private Agent _agent;
 
-    public void Init(Agent self) {
+    public void Init(Agent self, IState intialState = null) {
         _agent = self;
+        CurrentState = intialState;
     }
 
     public void Start()
