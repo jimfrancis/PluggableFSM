@@ -12,10 +12,9 @@ public class Agent : MonoBehaviour {
     // <Serialized> fields: will be populated by the inspector
     public Transform Eyes;
     public AgentStats Stats;
-    // public List<Transform> WayPointList;
     public GameObject BulletPrefab;
 
-    // public Transform Target { get; set; }
+    public Transform Target { get; set; }
 
     public Transform GetTransform() {
         return GetComponent<Transform>();
@@ -26,13 +25,7 @@ public class Agent : MonoBehaviour {
 
         return Eyes;
     }
-
-    /*public List<Transform> GetWayPoints() {
-        ValidateComponent(WayPointList, "Patrol Waypoints");
-
-        return WayPointList;
-    }*/
-
+   
     public NavMeshAgent GetNavMeshAgent() {
         ValidateComponent(_navMeshAgent, "Agent Navmesh");
 

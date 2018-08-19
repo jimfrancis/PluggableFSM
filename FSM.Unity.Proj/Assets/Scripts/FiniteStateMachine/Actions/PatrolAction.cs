@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.FiniteStateMachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,8 +7,15 @@ using UnityEngine;
 [CreateAssetMenu (menuName = "Finite State Machine/Actions/Patrol")]
 public class PatrolAction : Action
 {
-	public override void Execute(IStateMachine stateMachine)
+    public List<Transform> WayPointList;
+    private int _nextWaypoint = 0;
+
+    public override void Execute(IStateMachine stateMachine)
 	{
+        if (WayPointList == null) {
+            throw new Exception($"No Waypoints found in Patrol Action for {stateMachine.GetAgent().gameObject.name}");
+        }
+
 		Patrol(stateMachine);
 	}
 
@@ -15,15 +23,15 @@ public class PatrolAction : Action
 	{
         var navMeshAgent = stateMachine.GetAgent().GetNavMeshAgent();
         var agentStats = stateMachine.GetAgent().GetStats();
-        var wayPoints = stateMachine.GetAgent().GetWayPoints();
+        var wayPoints = WayPointList;
 
         navMeshAgent.stoppingDistance = agentStats.PatrolStoppingDistance;
-        navMeshAgent.destination = wayPoints[controller.NextWayPoint].position;
+        navMeshAgent.destination = wayPoints[_nextWaypoint].position;
         navMeshAgent.isStopped = false;
 
 		if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance && !navMeshAgent.pathPending) 
 		{
-			controller.NextWayPoint = (controller.NextWayPoint + 1) % controller.WayPointList.Count;
+            _nextWaypoint = (_nextWaypoint + 1) % WayPointList.Count;
 		}
 	}
 }
